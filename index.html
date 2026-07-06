@@ -1,0 +1,1322 @@
+<!DOCTYPE html>
+
+<html lang="es">
+
+  <head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>MediConnecta — Prototipo</title>
+
+    <link href="styles.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div class="app-shell" id="app-shell">
+      <!-- ============ LANDING ============ -->
+      <div class="screen active" id="screen-landing">
+        <div class="topbar">
+          <span class="app-title">MediConnecta</span>
+        </div>
+        <div class="content">
+          <div class="logo-wrap">
+            <svg height="130" viewbox="0 0 130 130" width="130">
+              <path d="M55 10h20v35h35v20H75v35H55V65H20V45h35z" fill="#e33b3b"></path>
+              <path d="M20 90c20-6 26 10 42 4 16-6 20-24 42-30l4 14c-22 6-26 24-44 30-18 6-28-8-44-4z" fill="#136c8c"></path>
+              <path d="M28 96c18-4 24 9 40 4 15-5 20-20 38-26l3 11c-18 6-22 20-38 26-16 6-24-6-43-2z" fill="#1e9e7a"></path>
+            </svg>
+            <div class="brand-name">MediConnecta</div>
+            <div class="brand-sub">Atención médica y ambulancias<br />al alcance de tu mano</div>
+          </div>
+          <div class="landing-buttons">
+            <button class="btn btn-green" id="btn-ambulance">
+              <svg fill="none" height="18" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="18">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+              Llamar a ambulancia
+            </button>
+            <button class="btn btn-outline" id="btn-register">Registrarse como usuario</button>
+          </div>
+        </div>
+      </div>
+      <!-- ============ FORM ============ -->
+      <div class="screen" id="screen-form">
+        <div class="topbar"><span class="app-title">MediConnecta</span></div>
+        <div class="content">
+          <div class="form-title">Crear cuenta</div>
+          <div class="field" id="fld-nombre">
+            <label>Nombre completo</label>
+            <input id="f-nombre" placeholder="Ej: Alfonso terrero" type="text" />
+            <div class="field-error">Este campo es obligatorio</div>
+          </div>
+          <div class="field" id="fld-id">
+            <label>Identificación</label>
+            <input id="f-id" placeholder="Ej: x-xxxx-xxxx" type="text" />
+            <div class="field-error">Este campo es obligatorio</div>
+          </div>
+          <div class="field" id="fld-sexo">
+            <label>Sexo</label>
+            <div class="radio-row">
+              <label class="radio"><input name="sexo" type="radio" value="Hombre" /> Hombre</label>
+              <label class="radio"><input name="sexo" type="radio" value="Mujer" /> Mujer</label>
+            </div>
+            <div class="field-error">Selecciona una opción</div>
+          </div>
+          <div class="field" id="fld-correo">
+            <label>Correo electrónico</label>
+            <input id="f-correo" placeholder="Ej: Victoria@gmail.com" type="email" />
+            <div class="field-error" id="err-correo-msg">Este campo es obligatorio</div>
+          </div>
+          <div class="field" id="fld-fecha">
+            <label>Fecha de nacimiento</label>
+            <div class="date-row">
+              <select id="f-dia"></select>
+              <select id="f-mes"></select>
+              <select id="f-anio"></select>
+            </div>
+            <div class="field-error">Selecciona tu fecha de nacimiento</div>
+          </div>
+          <div class="field" id="fld-tel">
+            <label>Número de teléfono</label>
+            <input id="f-tel" placeholder="Ej: xxxx-xxxx" type="tel" />
+            <div class="field-banner-error" id="err-tel-banner">
+              <svg fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="15">
+                <circle cx="12" cy="12" r="10"></circle>
+                <line x1="12" x2="12" y1="8" y2="12"></line>
+                <line x1="12" x2="12.01" y1="16" y2="16"></line>
+              </svg>
+              <span id="err-tel-text">Porfavor introduzca correctamente el número de teléfono</span>
+            </div>
+          </div>
+          <div class="field">
+            <label>Tarjeta de crédito <span class="opt">(opcional)</span></label>
+            <div class="card-row">
+              <input id="f-pan" placeholder="PAN" type="text" />
+              <input id="f-cvv" placeholder="CVV" type="text" />
+            </div>
+          </div>
+          <div class="form-submit">
+            <button class="btn btn-black" id="btn-crear-cuenta">Crear cuenta</button>
+          </div>
+        </div>
+      </div>
+      <!-- ============ PERMISSION: LOCATION ============ -->
+      <div class="screen overlay-screen" id="screen-permission-location">
+        <div class="sheet">
+          <div class="sheet-icon">
+            <svg fill="none" height="26" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="26">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+          </div>
+          <div class="sheet-title">¿Permitir a <b>MediConnecta</b> acceso a la ubicación en tiempo real?</div>
+          <button class="sheet-btn strong" onclick="permissionChoice('location','always')">Siempre</button>
+          <button class="sheet-btn" onclick="permissionChoice('location','once')">Solo esta vez</button>
+          <button class="sheet-btn muted" onclick="permissionChoice('location','never')">Nunca</button>
+        </div>
+      </div>
+      <!-- ============ WARNING: LOCATION ============ -->
+      <div class="screen overlay-screen" id="screen-warning-location">
+        <div class="warn-card">
+          <div class="warn-ico-wrap">
+            <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+              <line x1="12" x2="12" y1="9" y2="13"></line>
+              <line x1="12" x2="12.01" y1="17" y2="17"></line>
+            </svg>
+          </div>
+          <div class="warn-text">No tendrás acceso a las farmacias u hospitales más cercanos, ni podrás llamar ambulancias o hacer pedidos por medio de la app.<br /><b>¿Estás seguro?</b></div>
+          <div class="warn-buttons">
+            <button onclick="warningChoice('location', false)">No</button>
+            <button class="yes" onclick="warningChoice('location', true)">Sí</button>
+          </div>
+        </div>
+      </div>
+      <!-- ============ PERMISSION: CALENDAR ============ -->
+      <div class="screen overlay-screen" id="screen-permission-calendar">
+        <div class="sheet">
+          <div class="sheet-icon">
+            <svg fill="none" height="26" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="26">
+              <rect height="18" rx="2" ry="2" width="18" x="3" y="4"></rect>
+              <line x1="16" x2="16" y1="2" y2="6"></line>
+              <line x1="8" x2="8" y1="2" y2="6"></line>
+              <line x1="3" x2="21" y1="10" y2="10"></line>
+            </svg>
+          </div>
+          <div class="sheet-title">¿Permitir a <b>MediConnecta</b> acceso al calendario?</div>
+          <button class="sheet-btn strong" onclick="permissionChoice('calendar','always')">Siempre</button>
+          <button class="sheet-btn" onclick="permissionChoice('calendar','once')">Solo esta vez</button>
+          <button class="sheet-btn muted" onclick="permissionChoice('calendar','never')">Nunca</button>
+        </div>
+      </div>
+      <!-- ============ WARNING: CALENDAR ============ -->
+      <div class="screen overlay-screen" id="screen-warning-calendar">
+        <div class="warn-card">
+          <div class="warn-ico-wrap">
+            <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+              <line x1="12" x2="12" y1="9" y2="13"></line>
+              <line x1="12" x2="12.01" y1="17" y2="17"></line>
+            </svg>
+          </div>
+          <div class="warn-text">No podrás agendar tus citas por medio de la app.<br /><b>¿Estás seguro?</b></div>
+          <div class="warn-buttons">
+            <button onclick="warningChoice('calendar', false)">No</button>
+            <button class="yes" onclick="warningChoice('calendar', true)">Sí</button>
+          </div>
+        </div>
+      </div>
+      <!-- ============ PERMISSION: NOTIFICATIONS ============ -->
+      <div class="screen overlay-screen" id="screen-permission-notif">
+        <div class="sheet">
+          <div class="sheet-icon">
+            <svg fill="none" height="26" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="26">
+              <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"></path>
+              <path d="M13.73 21a2 2 0 0 1-3.46 0"></path>
+            </svg>
+          </div>
+          <div class="sheet-title">¿Permitir a <b>MediConnecta</b> acceso a notificaciones y llamadas?</div>
+          <button class="sheet-btn strong" onclick="permissionChoice('notif','always')">Siempre</button>
+          <button class="sheet-btn" onclick="permissionChoice('notif','once')">Solo esta vez</button>
+          <button class="sheet-btn muted" onclick="permissionChoice('notif','never')">Nunca</button>
+        </div>
+      </div>
+      <!-- ============ WARNING: NOTIF ============ -->
+      <div class="screen overlay-screen" id="screen-warning-notif">
+        <div class="warn-card">
+          <div class="warn-ico-wrap">
+            <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24">
+              <path d="M10.29 3.86L1.82 18a2 2 0 0 0 1.71 3h16.94a2 2 0 0 0 1.71-3L13.71 3.86a2 2 0 0 0-3.42 0z"></path>
+              <line x1="12" x2="12" y1="9" y2="13"></line>
+              <line x1="12" x2="12.01" y1="17" y2="17"></line>
+            </svg>
+          </div>
+          <div class="warn-text">No podrás recibir llamadas ni notificaciones de los servicios por medio de la app.<br /><b>¿Estás seguro?</b></div>
+          <div class="warn-buttons">
+            <button onclick="warningChoice('notif', false)">No</button>
+            <button class="yes" onclick="warningChoice('notif', true)">Sí</button>
+          </div>
+        </div>
+      </div>
+      <!-- ============ NOTICIAS ============ -->
+      <div class="screen" id="screen-noticias">
+        <div class="app-topbar">
+          <div class="app-topbar-row">
+            <div class="app-topbar-title"><b>MediConnecta</b><span class="badge-pill">Noticias</span></div>
+            <button class="hamburger-btn" onclick="toggleMenu()">
+              <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="20">
+                <line x1="3" x2="21" y1="6" y2="6"></line>
+                <line x1="3" x2="21" y1="12" y2="12"></line>
+                <line x1="3" x2="21" y1="18" y2="18"></line>
+              </svg>
+            </button>
+            <div class="menu-panel" id="menu-panel">
+              <button onclick="switchTab('noticias')">Noticias</button>
+              <button onclick="openInfoScreen('cuenta')">Cuenta</button>
+              <button onclick="openInfoScreen('accesibilidad')">Accesibilidad</button>
+              <button onclick="openInfoScreen('notificaciones')">Notificaciones</button>
+              <button onclick="openInfoScreen('comentarios')">Comentarios</button>
+              <button onclick="openInfoScreen('ayuda')">Ayuda</button>
+              <button onclick="resetAll()">Cerrar sesión</button>
+            </div>
+          </div>
+          <div class="search-row">
+            <svg fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="15">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" x2="16.65" y1="21" y2="16.65"></line>
+            </svg>
+            <input placeholder="Buscar noticias..." />
+            <svg fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="15">
+              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+              <line x1="12" x2="12" y1="19" y2="23"></line>
+            </svg>
+          </div>
+        </div>
+        <div class="content">
+          <div class="news-card">
+            <div class="news-thumb" style="background:#3b7d5c">🩺</div>
+            <div class="news-body">
+              <div class="news-title">Nuevo equipo láser reduce cálculos renales de forma rápida y segura</div>
+              <div class="news-meta">22 de mayo de 2026 · Chitré, Herrera</div>
+            </div>
+          </div>
+          <div class="news-card">
+            <div class="news-thumb" style="background:#8a8f7e">🏥</div>
+            <div class="news-body">
+              <div class="news-title">Hospital Paitilla felicita a sus médicos en el Día del Médico</div>
+              <div class="news-meta">21 de junio de 2026 · Panamá, Panamá</div>
+            </div>
+          </div>
+          <div class="news-card">
+            <div class="news-thumb" style="background:#d98b8b">🎂</div>
+            <div class="news-body">
+              <div class="news-title">Se acerca el cumpleaños de la doctora Emily Ureña, el gobierno piensa dejar día libre</div>
+              <div class="news-meta">06 de julio de 2026 · Panamá Oeste, Panamá</div>
+            </div>
+          </div>
+          <div class="news-card">
+            <div class="news-thumb" style="background:#5a7fa6">🤝</div>
+            <div class="news-body">
+              <div class="news-title">Ministra se reúne con representantes de la Embajada de Estados Unidos para coordinar atenciones de salud en áreas de difícil acceso</div>
+              <div class="news-meta">04 de julio de 2026 · Ciudad de Panamá</div>
+            </div>
+          </div>
+        </div>
+        <div class="bottom-nav">
+          <button class="nav-item" data-tab="centros" onclick="switchTab('centros')"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+              <path d="M3 21h18"></path>
+              <path d="M5 21V7l7-4 7 4v14"></path>
+              <path d="M9 21v-6h6v6"></path>
+              <line x1="12" x2="12" y1="9" y2="13"></line>
+              <line x1="10" x2="14" y1="11" y2="11"></line>
+            </svg><span>Centros de salud</span></button>
+          <button class="nav-item" data-tab="especialistas" onclick="switchTab('especialistas')"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg><span>Especialistas</span></button>
+          <button class="nav-item" data-tab="medicamentos" onclick="switchTab('medicamentos')"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+              <rect height="12" rx="2" width="18" x="3" y="9"></rect>
+              <path d="M8 9V6a4 4 0 0 1 8 0v3"></path>
+            </svg><span>Medicamentos</span></button>
+          <button class="nav-item" data-tab="agenda" onclick="switchTab('agenda')"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+              <rect height="18" rx="2" width="18" x="3" y="4"></rect>
+              <line x1="16" x2="16" y1="2" y2="6"></line>
+              <line x1="8" x2="8" y1="2" y2="6"></line>
+              <line x1="3" x2="21" y1="10" y2="10"></line>
+            </svg><span>Agenda</span></button>
+        </div>
+      </div>
+      <!-- ============ CENTROS DE SALUD ============ -->
+      <div class="screen" id="screen-centros">
+        <div class="app-topbar">
+          <div class="app-topbar-row">
+            <div class="app-topbar-title"><b>MediConnecta</b> Centros de Salud</div>
+            <button class="hamburger-btn" onclick="toggleMenu()">
+              <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="20">
+                <line x1="3" x2="21" y1="6" y2="6"></line>
+                <line x1="3" x2="21" y1="12" y2="12"></line>
+                <line x1="3" x2="21" y1="18" y2="18"></line>
+              </svg>
+            </button>
+            <div class="menu-panel" id="menu-panel-2">
+              <button onclick="switchTab('noticias')">Noticias</button>
+              <button onclick="openInfoScreen('cuenta')">Cuenta</button>
+              <button onclick="openInfoScreen('accesibilidad')">Accesibilidad</button>
+              <button onclick="openInfoScreen('notificaciones')">Notificaciones</button>
+              <button onclick="openInfoScreen('comentarios')">Comentarios</button>
+              <button onclick="openInfoScreen('ayuda')">Ayuda</button>
+              <button onclick="resetAll()">Cerrar sesión</button>
+            </div>
+          </div>
+          <div class="search-row">
+            <svg fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="15">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" x2="16.65" y1="21" y2="16.65"></line>
+            </svg>
+            <input id="centros-search" oninput="filterCentros(this.value)" placeholder="Buscar..." />
+            <svg fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="15">
+              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+              <line x1="12" x2="12" y1="19" y2="23"></line>
+            </svg>
+          </div>
+        </div>
+        <div class="content">
+          <button class="filter-toggle" onclick="toggleFilter('centros')">
+            <svg fill="none" height="13" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" width="13">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+            Tipos
+          </button>
+          <div class="filter-panel" id="filter-centros">
+            <label class="filter-check"><input checked="" data-type="todos" onchange="applyCentrosFilter(this)" type="checkbox" /> Todos</label>
+            <label class="filter-check"><input data-type="Hospital público" onchange="applyCentrosFilter(this)" type="checkbox" /> Hospital público</label>
+            <label class="filter-check"><input data-type="Hospital privado" onchange="applyCentrosFilter(this)" type="checkbox" /> Hospital privado</label>
+            <label class="filter-check"><input data-type="Clínica pública" onchange="applyCentrosFilter(this)" type="checkbox" /> Clínica pública</label>
+            <label class="filter-check"><input data-type="Clínica privada" onchange="applyCentrosFilter(this)" type="checkbox" /> Clínica privada</label>
+            <label class="filter-check"><input data-type="Centros de salud" onchange="applyCentrosFilter(this)" type="checkbox" /> Centros de salud</label>
+            <label class="filter-check"><input data-type="Policlínicas" onchange="applyCentrosFilter(this)" type="checkbox" /> Policlínicas</label>
+          </div>
+          <div class="hosp-card" data-addr="Av. Cuba 39 · 207-8100 · 4km" data-color="#2f6b8f" data-hours="Abierto las 24 horas" data-icon="🏥" data-name="Hospital Nacional de Panamá" data-phone="207 - 8100" data-specialties="Cardiología|Pediatría|Traumatología" data-stars="★★★★☆" data-type="Hospital privado" onclick="showHospitalDetail(this)">
+            <div class="hosp-thumb" style="background:#2f6b8f">🏥</div>
+            <div class="hosp-body">
+              <div class="hosp-name">Hospital Nacional de Panamá</div>
+              <div class="stars">★★★★☆</div>
+              <div class="hosp-addr">Av. Cuba 39 · 207-8100 · 4km</div>
+              <div class="hosp-status open">Abierto las 24 horas</div>
+            </div>
+          </div>
+          <div class="hosp-card" data-addr="Chorrera, Av. Mariano Rivera · 254-8926 · 10km" data-color="#5c6b4f" data-hours="Abierto las 24 horas" data-icon="🏥" data-name="Hospital Regional de La Chorrera Dr. Nicolás A. Solano" data-phone="254 - 8926" data-specialties="Medicina general|Ginecología|Urgencias" data-stars="★★★★☆" data-type="Hospital público" onclick="showHospitalDetail(this)">
+            <div class="hosp-thumb" style="background:#5c6b4f">🏥</div>
+            <div class="hosp-body">
+              <div class="hosp-name">Hospital Regional de La Chorrera Dr. Nicolás A. Solano</div>
+              <div class="stars">★★★★☆</div>
+              <div class="hosp-addr">Chorrera, Av. Mariano Rivera · 254-8926 · 10km</div>
+              <div class="hosp-status open">Abierto las 24 horas</div>
+            </div>
+          </div>
+          <div class="hosp-card" data-addr="1006 Vacamonte · 251-4248 · 5km" data-color="#7a7a7a" data-hours="Abierto las 24 horas" data-icon="🏥" data-name="Clínica Romero" data-phone="251 - 4248" data-specialties="Medicina general|Odontología" data-stars="★★★★☆" data-type="Clínica privada" onclick="showHospitalDetail(this)">
+            <div class="hosp-thumb" style="background:#7a7a7a">🏥</div>
+            <div class="hosp-body">
+              <div class="hosp-name">Clínica Romero</div>
+              <div class="stars">★★★★☆</div>
+              <div class="hosp-addr">1006 Vacamonte · 251-4248 · 5km</div>
+              <div class="hosp-status open">Abierto las 24 horas</div>
+            </div>
+          </div>
+          <div class="hosp-card" data-addr="XF66+W8G, Av. Justo Arosemena · 6km" data-color="#3f7ca6" data-hours="Abierto | Cierra a las 11pm" data-icon="🏢" data-name="Policlínica Dr. Manuel Ferrer Valdés" data-phone="800 - 0277" data-specialties="Dermatología (No disponible)|Fonoaudiología (No disponible)|Fisioterapia" data-stars="★★★☆☆" data-type="Policlínicas" onclick="showHospitalDetail(this)">
+            <div class="hosp-thumb" style="background:#3f7ca6">🏢</div>
+            <div class="hosp-body">
+              <div class="hosp-name">Policlínica Dr. Manuel Ferrer Valdés</div>
+              <div class="stars">★★★☆☆</div>
+              <div class="hosp-addr">XF66+W8G, Av. Justo Arosemena · 6km</div>
+              <div class="hosp-status open">Abierto | Cierra a las 11pm</div>
+            </div>
+          </div>
+          <div class="hosp-card" data-addr="XFWQ+VF9, Av. Dr. Belisario Porras · 8km" data-color="#6b6b6b" data-hours="Abierto | Cierra a las 7pm" data-icon="🏢" data-name="Policlínica Dr. Carlos Nicolás Brin" data-phone="800 - 0412" data-specialties="Pediatría|Ginecología|Nutrición" data-stars="★★★★★" data-type="Policlínicas" onclick="showHospitalDetail(this)">
+            <div class="hosp-thumb" style="background:#6b6b6b">🏢</div>
+            <div class="hosp-body">
+              <div class="hosp-name">Policlínica Dr. Carlos Nicolás Brin</div>
+              <div class="stars">★★★★★</div>
+              <div class="hosp-addr">XFWQ+VF9, Av. Dr. Belisario Porras · 8km</div>
+              <div class="hosp-status open">Abierto | Cierra a las 7pm</div>
+            </div>
+          </div>
+          <div class="hosp-card" data-addr="XFJ8+963, Av. José de Fábrega · 10km" data-color="#4a4a4a" data-hours="Abierto | Cierra a las 6pm" data-icon="🏢" data-name="Policlínica Especializada de la Caja de Seguro Social" data-phone="800 - 0525" data-specialties="Endocrinología|Cardiología|Fisioterapia" data-stars="★★★★☆" data-type="Policlínicas" onclick="showHospitalDetail(this)">
+            <div class="hosp-thumb" style="background:#4a4a4a">🏢</div>
+            <div class="hosp-body">
+              <div class="hosp-name">Policlínica Especializada de la Caja de Seguro Social</div>
+              <div class="stars">★★★★☆</div>
+              <div class="hosp-addr">XFJ8+963, Av. José de Fábrega · 10km</div>
+              <div class="hosp-status open">Abierto | Cierra a las 6pm</div>
+            </div>
+          </div>
+          <div id="centros-empty" style="display:none; text-align:center; color:var(--muted); font-size:13.5px; padding:24px 12px;">No hay registros con ese nombre.</div>
+        </div>
+        <div class="bottom-nav">
+          <button class="nav-item active" data-tab="centros" onclick="switchTab('centros')"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+              <path d="M3 21h18"></path>
+              <path d="M5 21V7l7-4 7 4v14"></path>
+              <path d="M9 21v-6h6v6"></path>
+              <line x1="12" x2="12" y1="9" y2="13"></line>
+              <line x1="10" x2="14" y1="11" y2="11"></line>
+            </svg><span>Centros de salud</span></button>
+          <button class="nav-item" data-tab="especialistas" onclick="switchTab('especialistas')"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg><span>Especialistas</span></button>
+          <button class="nav-item" data-tab="medicamentos" onclick="switchTab('medicamentos')"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+              <rect height="12" rx="2" width="18" x="3" y="9"></rect>
+              <path d="M8 9V6a4 4 0 0 1 8 0v3"></path>
+            </svg><span>Medicamentos</span></button>
+          <button class="nav-item" data-tab="agenda" onclick="switchTab('agenda')"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+              <rect height="18" rx="2" width="18" x="3" y="4"></rect>
+              <line x1="16" x2="16" y1="2" y2="6"></line>
+              <line x1="8" x2="8" y1="2" y2="6"></line>
+              <line x1="3" x2="21" y1="10" y2="10"></line>
+            </svg><span>Agenda</span></button>
+        </div>
+      </div>
+      <!-- ============ ESPECIALISTAS ============ -->
+      <div class="screen" id="screen-especialistas">
+        <div class="app-topbar">
+          <div class="app-topbar-row">
+            <div class="app-topbar-title"><b>MediConnecta</b> Especialistas</div>
+            <button class="hamburger-btn" onclick="toggleMenu()">
+              <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="20">
+                <line x1="3" x2="21" y1="6" y2="6"></line>
+                <line x1="3" x2="21" y1="12" y2="12"></line>
+                <line x1="3" x2="21" y1="18" y2="18"></line>
+              </svg>
+            </button>
+            <div class="menu-panel" id="menu-panel-3">
+              <button onclick="switchTab('noticias')">Noticias</button>
+              <button onclick="openInfoScreen('cuenta')">Cuenta</button>
+              <button onclick="openInfoScreen('accesibilidad')">Accesibilidad</button>
+              <button onclick="openInfoScreen('notificaciones')">Notificaciones</button>
+              <button onclick="openInfoScreen('comentarios')">Comentarios</button>
+              <button onclick="openInfoScreen('ayuda')">Ayuda</button>
+              <button onclick="resetAll()">Cerrar sesión</button>
+            </div>
+          </div>
+          <div class="tab-switch">
+            <button class="active" id="esp-tab-doctores" onclick="setEspTab('doctores')">Doctores</button>
+            <button id="esp-tab-especialidades" onclick="setEspTab('especialidades')">Especialidades</button>
+          </div>
+          <div class="search-row">
+            <svg fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="15">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" x2="16.65" y1="21" y2="16.65"></line>
+            </svg>
+            <input id="doc-search" oninput="filterDoctors(this.value)" placeholder="Ingrese el nombre del especialista" />
+            <svg fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="15">
+              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+              <line x1="12" x2="12" y1="19" y2="23"></line>
+            </svg>
+          </div>
+        </div>
+        <div class="content">
+          <div class="filter-panel" id="filter-especialidades">
+            <label class="filter-check"><input checked="" data-spec="todos" onchange="applyEspFilter(this)" type="checkbox" /> Todos</label>
+            <label class="filter-check"><input data-spec="Glaucoma" onchange="applyEspFilter(this)" type="checkbox" /> Glaucoma</label>
+            <label class="filter-check"><input data-spec="Psicología" onchange="applyEspFilter(this)" type="checkbox" /> Psicología</label>
+            <label class="filter-check"><input data-spec="Pediatría" onchange="applyEspFilter(this)" type="checkbox" /> Pediatría</label>
+            <label class="filter-check"><input data-spec="Cirugía general" onchange="applyEspFilter(this)" type="checkbox" /> Cirugía general</label>
+            <label class="filter-check"><input data-spec="Endocrinología" onchange="applyEspFilter(this)" type="checkbox" /> Endocrinología</label>
+          </div>
+          <div class="doc-card" data-color="#e0a13a" data-edu="Glaucoma (Udelas 2018-2023)" data-initials="EU" data-name="Emily Ureña" data-nota="Solo agenda personas que ya sean pacientes." data-spec="Glaucoma" onclick="showDoctorDetail(this)">
+            <div class="doc-avatar" style="background:#e0a13a">EU</div>
+            <div class="doc-body">
+              <div class="doc-name">Emily Ureña</div>
+              <div class="doc-spec">Glaucoma | Traficante</div>
+              <div class="stars">★★★★★</div>
+              <div class="doc-city">Ciudad de Panamá, Panamá</div>
+            </div>
+          </div>
+          <div class="doc-card" data-color="#e0c93a" data-edu="Glaucoma (Udelas 2022-2027)|Psicología (Universidad Nacional De Panamá 2022-2027)" data-initials="ST" data-name="Stephanie Terrero" data-nota="Solo agenda personas que ya sean pacientes." data-spec="Psicología" onclick="showDoctorDetail(this)">
+            <div class="doc-avatar" style="background:#e0c93a">ST</div>
+            <div class="doc-body">
+              <div class="doc-name">Stephanie Terrero</div>
+              <div class="doc-spec">Glaucoma | Psicóloga | Pediatría</div>
+              <div class="stars">★★★★★</div>
+              <div class="doc-city">Ciudad de Panamá, Panamá</div>
+            </div>
+          </div>
+          <div class="doc-card" data-color="#d9584f" data-edu="Cirugía general (Universidad de Panamá 2015-2021)" data-initials="EC" data-name="Ericka Ceballos" data-nota="Atiende con cita previa únicamente." data-spec="Cirugía general" onclick="showDoctorDetail(this)">
+            <div class="doc-avatar" style="background:#d9584f">EC</div>
+            <div class="doc-body">
+              <div class="doc-name">Ericka Ceballos</div>
+              <div class="doc-spec">Cirugía general</div>
+              <div class="stars">★★★★★</div>
+              <div class="doc-city">Ciudad de Panamá, Panamá</div>
+            </div>
+          </div>
+          <div class="doc-card" data-color="#d97fae" data-edu="Endocrinología (Universidad Latina 2016-2022)" data-initials="LF" data-name="Louis Forrest" data-nota="Solo agenda personas que ya sean pacientes." data-spec="Endocrinología" onclick="showDoctorDetail(this)">
+            <div class="doc-avatar" style="background:#d97fae">LF</div>
+            <div class="doc-body">
+              <div class="doc-name">Louis Forrest</div>
+              <div class="doc-spec">Endocrinología</div>
+              <div class="stars">★★★★★</div>
+              <div class="doc-city">Ciudad de Panamá, Panamá</div>
+            </div>
+          </div>
+        </div>
+        <div class="bottom-nav">
+          <button class="nav-item" data-tab="centros" onclick="switchTab('centros')"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+              <path d="M3 21h18"></path>
+              <path d="M5 21V7l7-4 7 4v14"></path>
+              <path d="M9 21v-6h6v6"></path>
+              <line x1="12" x2="12" y1="9" y2="13"></line>
+              <line x1="10" x2="14" y1="11" y2="11"></line>
+            </svg><span>Centros de salud</span></button>
+          <button class="nav-item active" data-tab="especialistas" onclick="switchTab('especialistas')"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg><span>Especialistas</span></button>
+          <button class="nav-item" data-tab="medicamentos" onclick="switchTab('medicamentos')"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+              <rect height="12" rx="2" width="18" x="3" y="9"></rect>
+              <path d="M8 9V6a4 4 0 0 1 8 0v3"></path>
+            </svg><span>Medicamentos</span></button>
+          <button class="nav-item" data-tab="agenda" onclick="switchTab('agenda')"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+              <rect height="18" rx="2" width="18" x="3" y="4"></rect>
+              <line x1="16" x2="16" y1="2" y2="6"></line>
+              <line x1="8" x2="8" y1="2" y2="6"></line>
+              <line x1="3" x2="21" y1="10" y2="10"></line>
+            </svg><span>Agenda</span></button>
+        </div>
+      </div>
+      <!-- ============ MEDICAMENTOS ============ -->
+      <div class="screen" id="screen-medicamentos">
+        <div class="app-topbar">
+          <div class="app-topbar-row">
+            <div class="app-topbar-title"><b>MediConnecta</b> Medicamentos</div>
+            <button class="hamburger-btn" onclick="toggleMenu()">
+              <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="20">
+                <line x1="3" x2="21" y1="6" y2="6"></line>
+                <line x1="3" x2="21" y1="12" y2="12"></line>
+                <line x1="3" x2="21" y1="18" y2="18"></line>
+              </svg>
+            </button>
+            <div class="menu-panel" id="menu-panel-4">
+              <button onclick="switchTab('noticias')">Noticias</button>
+              <button onclick="openInfoScreen('cuenta')">Cuenta</button>
+              <button onclick="openInfoScreen('accesibilidad')">Accesibilidad</button>
+              <button onclick="openInfoScreen('notificaciones')">Notificaciones</button>
+              <button onclick="openInfoScreen('comentarios')">Comentarios</button>
+              <button onclick="openInfoScreen('ayuda')">Ayuda</button>
+              <button onclick="resetAll()">Cerrar sesión</button>
+            </div>
+          </div>
+          <div class="search-row">
+            <svg fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="15">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" x2="16.65" y1="21" y2="16.65"></line>
+            </svg>
+            <input id="med-search" oninput="filterMeds(this.value)" placeholder="Buscar medicamentos..." />
+            <svg fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="15">
+              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+              <line x1="12" x2="12" y1="19" y2="23"></line>
+            </svg>
+          </div>
+        </div>
+        <div class="content" id="med-list">
+          <!-- Aviso de pedido activo (visible cuando hay un delivery en camino) -->
+          <div class="order-banner" id="order-banner"></div>
+
+          <div class="med-card" data-id="med1" data-name="acetaminofén 500mg">
+            <div class="med-thumb" style="background:#d9584f">💊</div>
+            <div class="med-body">
+              <div class="med-name">Acetaminofén 500mg</div>
+              <div class="med-box">Caja x 10 tabletas</div>
+              <div class="med-stock">Stock: 15 disponibles</div>
+              <div class="med-pharm">Farmacia Arrocha</div>
+              <div class="med-hours open">Abierto · Cierra 9:00 pm</div>
+              <div class="med-footer">
+                <div class="med-price">$2.00</div>
+                <div class="med-actions" id="actions-med1"></div>
+              </div>
+            </div>
+          </div>
+          <div class="med-card" data-id="med2" data-name="acetaminofén 500mg">
+            <div class="med-thumb" style="background:#e0a13a">💊</div>
+            <div class="med-body">
+              <div class="med-name">Acetaminofén 500mg</div>
+              <div class="med-box">Caja x 10 tabletas</div>
+              <div class="med-stock">Stock: 7 disponibles</div>
+              <div class="med-pharm">Farmacia EL Javillo</div>
+              <div class="med-hours closed">Cerrado · Abre 10:00 am</div>
+              <div class="med-footer">
+                <div class="med-price">$3.50</div>
+                <div class="med-actions" id="actions-med2"></div>
+              </div>
+            </div>
+          </div>
+          <div class="med-card" data-id="med3" data-name="acetaminofén 500mg">
+            <div class="med-thumb" style="background:#c93a4f">💊</div>
+            <div class="med-body">
+              <div class="med-name">Acetaminofén 500mg</div>
+              <div class="med-box">Caja x 10 tabletas</div>
+              <div class="med-stock">Stock: 23 disponibles</div>
+              <div class="med-pharm">Farmacia Plus</div>
+              <div class="med-hours open">Abierto · Cierra 11:00 pm</div>
+              <div class="med-footer">
+                <div class="med-price">$3.50</div>
+                <div class="med-actions" id="actions-med3"></div>
+              </div>
+            </div>
+          </div>
+          <div class="med-card" data-id="med4" data-name="ibuprofeno 400mg">
+            <div class="med-thumb" style="background:#e0a13a">💊</div>
+            <div class="med-body">
+              <div class="med-name">Ibuprofeno 400mg</div>
+              <div class="med-box">Caja x 10 tabletas</div>
+              <div class="med-stock">Stock: 30 disponibles</div>
+              <div class="med-pharm">Farmacia Metro</div>
+              <div class="med-hours closed">Cerrado · Abre 8:00 am</div>
+              <div class="med-footer">
+                <div class="med-price">$4.10</div>
+                <div class="med-actions" id="actions-med4"></div>
+              </div>
+            </div>
+          </div>
+          <div class="med-card" data-id="med5" data-name="loratadina 10mg">
+            <div class="med-thumb" style="background:#c93a4f">💊</div>
+            <div class="med-body">
+              <div class="med-name">Loratadina 10mg</div>
+              <div class="med-box">Caja x 10 tabletas</div>
+              <div class="med-stock">Stock: 6 disponibles</div>
+              <div class="med-pharm">Farmacia Revilla</div>
+              <div class="med-hours open">Abierto · Cierra 7:00 pm</div>
+              <div class="med-footer">
+                <div class="med-price">$3.20</div>
+                <div class="med-actions" id="actions-med5"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="cart-bar" id="cart-bar">
+          <button onclick="showCart()">Ver carrito (<span id="cart-count">0</span>)</button>
+        </div>
+        <div class="bottom-nav">
+          <button class="nav-item" data-tab="centros" onclick="switchTab('centros')"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+              <path d="M3 21h18"></path>
+              <path d="M5 21V7l7-4 7 4v14"></path>
+              <path d="M9 21v-6h6v6"></path>
+              <line x1="12" x2="12" y1="9" y2="13"></line>
+              <line x1="10" x2="14" y1="11" y2="11"></line>
+            </svg><span>Centros de salud</span></button>
+          <button class="nav-item" data-tab="especialistas" onclick="switchTab('especialistas')"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg><span>Especialistas</span></button>
+          <button class="nav-item active" data-tab="medicamentos" onclick="switchTab('medicamentos')"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+              <rect height="12" rx="2" width="18" x="3" y="9"></rect>
+              <path d="M8 9V6a4 4 0 0 1 8 0v3"></path>
+            </svg><span>Medicamentos</span></button>
+          <button class="nav-item" data-tab="agenda" onclick="switchTab('agenda')"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+              <rect height="18" rx="2" width="18" x="3" y="4"></rect>
+              <line x1="16" x2="16" y1="2" y2="6"></line>
+              <line x1="8" x2="8" y1="2" y2="6"></line>
+              <line x1="3" x2="21" y1="10" y2="10"></line>
+            </svg><span>Agenda</span></button>
+        </div>
+        <!-- Modal de detalle / seguimiento del pedido -->
+        <div class="modal-overlay" id="order-modal-overlay">
+          <div class="order-modal" id="order-modal-card"></div>
+        </div>
+      </div>
+      <!-- ============ AGENDA / RECORDATORIOS ============ -->
+      <div class="screen" id="screen-agenda">
+        <div class="app-topbar">
+          <div class="app-topbar-row">
+            <div class="app-topbar-title"><b>MediConnecta</b> Recordatorios</div>
+            <button class="hamburger-btn" onclick="toggleMenu()">
+              <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="20">
+                <line x1="3" x2="21" y1="6" y2="6"></line>
+                <line x1="3" x2="21" y1="12" y2="12"></line>
+                <line x1="3" x2="21" y1="18" y2="18"></line>
+              </svg>
+            </button>
+            <div class="menu-panel" id="menu-panel-5">
+              <button onclick="switchTab('noticias')">Noticias</button>
+              <button onclick="openInfoScreen('cuenta')">Cuenta</button>
+              <button onclick="openInfoScreen('accesibilidad')">Accesibilidad</button>
+              <button onclick="openInfoScreen('notificaciones')">Notificaciones</button>
+              <button onclick="openInfoScreen('comentarios')">Comentarios</button>
+              <button onclick="openInfoScreen('ayuda')">Ayuda</button>
+              <button onclick="resetAll()">Cerrar sesión</button>
+            </div>
+          </div>
+          <div class="search-row">
+            <svg fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-width="2" viewbox="0 0 24 24" width="15">
+              <circle cx="11" cy="11" r="8"></circle>
+              <line x1="21" x2="16.65" y1="21" y2="16.65"></line>
+            </svg>
+            <input id="agenda-search" oninput="filterAgenda(this.value)" placeholder="Buscar día o hora" />
+            <svg fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="15">
+              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+              <line x1="12" x2="12" y1="19" y2="23"></line>
+            </svg>
+          </div>
+        </div>
+        <div class="content">
+          <div class="profile-card">
+            <div class="profile-avatar">
+              <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </div>
+            <div>
+              <div class="profile-name" id="agenda-user-name">Oliver Isaac Ureña Ceballos de Terrero</div>
+            </div>
+          </div>
+          <div class="month-label" id="agenda-month-nav"></div>
+          <div class="day-scroll"></div>
+          <div id="agenda-list">
+            <button class="reminder-card" data-day="17" data-month="8" data-search="paracetamol" data-today="1" data-year="2026" onclick="event.preventDefault()">
+              <div class="reminder-dot"></div>
+              <div class="reminder-ic" style="background:#d9584f">💊</div>
+              <div class="reminder-body">
+                <div class="reminder-time">08:00 AM — Amoxicilina 500mg</div>
+                <div class="reminder-desc">1 cápsula</div>
+                <span class="reminder-badge">Después del desayuno</span>
+              </div>
+            </button>
+            <button class="reminder-card" data-day="17" data-month="8" data-search="cita clínica romero" data-today="1" data-year="2026" onclick="showAppointment('11:00 AM', 'Cita · Clínica Romero', '1006 Vacamonte, Panamá Oeste', this)">
+              <div class="reminder-dot"></div>
+              <div class="reminder-ic" style="background:#2f6b8f">🏥</div>
+              <div class="reminder-body">
+                <div class="reminder-time">11:00 AM — Cita · Clínica Romero</div>
+              </div>
+            </button>
+            <button class="reminder-card" data-day="17" data-month="8" data-search="cita hospital nacional" data-today="1" data-year="2026" onclick="showAppointment('3:30 PM', 'Cita · Hospital Nacional de Panamá', 'Av. Cuba 39, Ciudad de Panamá', this)">
+              <div class="reminder-dot"></div>
+              <div class="reminder-ic" style="background:#2f6b8f">🏥</div>
+              <div class="reminder-body">
+                <div class="reminder-time">3:30 PM — Cita · Hospital Nacional de Panamá</div>
+              </div>
+            </button>
+            <button class="reminder-card" data-day="31" data-month="8" data-search="31 agosto 07:00 am omeprazol" data-year="2026" onclick="event.preventDefault()">
+              <div class="reminder-dot"></div>
+              <div class="reminder-ic" style="background:#e0a13a">💊</div>
+              <div class="reminder-body">
+                <div class="reminder-time">07:00 AM — Omeprazol 9mg</div>
+                <div class="reminder-desc">1 tableta</div>
+                <span class="reminder-badge">Antes de almorzar</span>
+              </div>
+            </button>
+            <button class="reminder-card" data-day="31" data-month="8" data-search="31 agosto 8:40 am cita hospital nacional" data-year="2026" onclick="showAppointment('8:40 AM', 'Cita · Hospital Nacional de Panamá', 'Av. Cuba 39, Ciudad de Panamá', this)">
+              <div class="reminder-dot"></div>
+              <div class="reminder-ic" style="background:#2f6b8f">🏥</div>
+              <div class="reminder-body">
+                <div class="reminder-time">8:40 AM — Cita · Hospital Nacional de Panamá</div>
+              </div>
+            </button>
+            <div class="agenda-empty" id="agenda-empty">No hay recordatorios para esta fecha</div>
+          </div>
+        </div>
+        <div class="bottom-nav">
+          <button class="nav-item" data-tab="centros" onclick="switchTab('centros')"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+              <path d="M3 21h18"></path>
+              <path d="M5 21V7l7-4 7 4v14"></path>
+              <path d="M9 21v-6h6v6"></path>
+              <line x1="12" x2="12" y1="9" y2="13"></line>
+              <line x1="10" x2="14" y1="11" y2="11"></line>
+            </svg><span>Centros de salud</span></button>
+          <button class="nav-item" data-tab="especialistas" onclick="switchTab('especialistas')"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg><span>Especialistas</span></button>
+          <button class="nav-item" data-tab="medicamentos" onclick="switchTab('medicamentos')"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+              <rect height="12" rx="2" width="18" x="3" y="9"></rect>
+              <path d="M8 9V6a4 4 0 0 1 8 0v3"></path>
+            </svg><span>Medicamentos</span></button>
+          <button class="nav-item active" data-tab="agenda" onclick="switchTab('agenda')"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+              <rect height="18" rx="2" width="18" x="3" y="4"></rect>
+              <line x1="16" x2="16" y1="2" y2="6"></line>
+              <line x1="8" x2="8" y1="2" y2="6"></line>
+              <line x1="3" x2="21" y1="10" y2="10"></line>
+            </svg><span>Agenda</span></button>
+        </div>
+      </div>
+      <!-- ============ APPOINTMENT DETAIL ============ -->
+      <div class="screen" id="screen-appointment">
+        <div class="detail-topbar">
+          <button onclick="switchTab('agenda')">
+            <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <span>MediConnecta Recordatorios</span>
+        </div>
+        <div class="content">
+          <div class="detail-body">
+            <div class="detail-time" id="detail-time">10:00 AM</div>
+            <div class="detail-ic">
+              <svg fill="none" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="24">
+                <path d="M3 21h18"></path>
+                <path d="M5 21V7l7-4 7 4v14"></path>
+                <path d="M9 21v-6h6v6"></path>
+              </svg>
+            </div>
+            <div class="detail-place" id="detail-place">Cita · Clínica Romero</div>
+            <div class="detail-addr" id="detail-addr">1006 Vacamonte, Panamá Oeste</div>
+            <div class="detail-actions">
+              <button class="reagendar" onclick="reagendarCita()">Reagendar cita</button>
+              <button class="cancelar" onclick="cancelarCita()">Cancelar cita</button>
+            </div>
+          </div>
+        </div>
+        <div class="toast-overlay" id="cancel-toast" onclick="this.classList.remove('show')">
+          <div class="toast-card">Su cita ha sido cancelada con éxito!</div>
+        </div>
+      </div>
+      <!-- ============ HOSPITAL / CENTRO DETAIL ============ -->
+      <div class="screen" id="screen-hospital-detail">
+        <div class="detail-topbar">
+          <button onclick="switchTab('centros')">
+            <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <span>MediConnecta Centros de Salud</span>
+        </div>
+        <div class="content">
+          <div class="detail-photo" id="hd-photo">🏥</div>
+          <div class="detail-info-name" id="hd-name">Nombre del centro</div>
+          <div class="detail-info-row"><span class="stars" id="hd-stars">★★★★☆</span><a class="link-sm" href="javascript:void(0)" onclick="alert('Reseñas (demo)')">Ver reseñas</a></div>
+          <button class="fav-btn" onclick="this.classList.toggle('active'); this.querySelector('.heart').textContent = this.classList.contains('active') ? '❤️' : '🤍'">
+            <span class="heart">🤍</span> Agregar a favoritos
+          </button>
+          <div class="info-line">
+            <svg fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="15">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z"></path>
+              <circle cx="12" cy="10" r="3"></circle>
+            </svg>
+            <span id="hd-addr">Dirección</span>
+            <button class="mini-btn" onclick="alert('Abriendo ruta (demo)')">Ruta</button>
+          </div>
+          <div class="info-line">
+            <svg fill="none" height="15" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="15">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path>
+            </svg>
+            <span id="hd-phone">Teléfono</span>
+            <button class="mini-btn" onclick="alert('Llamando (demo)')">Llamar</button>
+          </div>
+          <div class="info-line status" id="hd-hours">Horario</div>
+          <button class="accordion-toggle" onclick="toggleAccordion(this,'hd-specialties-panel')">
+            Especialidades disponibles
+            <svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" width="14">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="accordion-panel" id="hd-specialties-panel"></div>
+          <button class="btn-schedule" onclick="openSchedule('hospital')">Agendar cita</button>
+        </div>
+        <div class="bottom-nav">
+          <button class="nav-item active" data-tab="centros" onclick="switchTab('centros')"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+              <path d="M3 21h18"></path>
+              <path d="M5 21V7l7-4 7 4v14"></path>
+              <path d="M9 21v-6h6v6"></path>
+              <line x1="12" x2="12" y1="9" y2="13"></line>
+              <line x1="10" x2="14" y1="11" y2="11"></line>
+            </svg><span>Centros de salud</span></button>
+          <button class="nav-item" data-tab="especialistas" onclick="switchTab('especialistas')"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg><span>Especialistas</span></button>
+          <button class="nav-item" data-tab="medicamentos" onclick="switchTab('medicamentos')"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+              <rect height="12" rx="2" width="18" x="3" y="9"></rect>
+              <path d="M8 9V6a4 4 0 0 1 8 0v3"></path>
+            </svg><span>Medicamentos</span></button>
+          <button class="nav-item" data-tab="agenda" onclick="switchTab('agenda')"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+              <rect height="18" rx="2" width="18" x="3" y="4"></rect>
+              <line x1="16" x2="16" y1="2" y2="6"></line>
+              <line x1="8" x2="8" y1="2" y2="6"></line>
+              <line x1="3" x2="21" y1="10" y2="10"></line>
+            </svg><span>Agenda</span></button>
+        </div>
+      </div>
+      <!-- ============ DOCTOR DETAIL ============ -->
+      <div class="screen" id="screen-doctor-detail">
+        <div class="detail-topbar">
+          <button onclick="switchTab('especialistas')">
+            <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <span>MediConnecta Especialistas</span>
+        </div>
+        <div class="content">
+          <div class="detail-photo" id="dd-photo" style="font-size:30px; font-weight:800;">DR</div>
+          <div class="detail-info-name" id="dd-name">Nombre del especialista</div>
+          <div class="doc-spec" id="dd-spec" style="margin-bottom:8px;">Especialidad</div>
+          <div class="detail-info-row"><span class="stars">★★★★★</span><a class="link-sm" href="javascript:void(0)" onclick="alert('Reseñas (demo)')">Ver reseñas</a></div>
+          <button class="fav-btn" onclick="this.classList.toggle('active'); this.querySelector('.heart').textContent = this.classList.contains('active') ? '❤️' : '🤍'">
+            <span class="heart">🤍</span> Agregar a favoritos
+          </button>
+          <button class="accordion-toggle" onclick="toggleAccordion(this,'dd-edu-panel')">
+            Educación
+            <svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" width="14">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="accordion-panel" id="dd-edu-panel"></div>
+          <button class="accordion-toggle" onclick="toggleAccordion(this,'dd-schedule-panel')">
+            Agendar tu cita
+            <svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" width="14">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="accordion-panel" id="dd-schedule-panel">
+            <div class="schedule-mini">
+              <div class="place">Hospital Nacional de Panamá</div>
+              <div class="addr">Piso 4, Consultorio 412. Av. Justo Arosemena y Calle 38 Este. Ciudad de Panamá</div>
+              <div class="contact">507 2XX-5444 · placeholder@hotmail.com</div>
+            </div>
+            <button class="btn-schedule" onclick="openSchedule('doctor')">Agendar cita</button>
+          </div>
+          <button class="accordion-toggle" onclick="toggleAccordion(this,'dd-nota-panel')">
+            Nota de la especialista
+            <svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" width="14">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="accordion-panel" id="dd-nota-panel"></div>
+        </div>
+        <div class="bottom-nav">
+          <button class="nav-item" data-tab="centros" onclick="switchTab('centros')"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+              <path d="M3 21h18"></path>
+              <path d="M5 21V7l7-4 7 4v14"></path>
+              <path d="M9 21v-6h6v6"></path>
+              <line x1="12" x2="12" y1="9" y2="13"></line>
+              <line x1="10" x2="14" y1="11" y2="11"></line>
+            </svg><span>Centros de salud</span></button>
+          <button class="nav-item active" data-tab="especialistas" onclick="switchTab('especialistas')"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+              <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+              <circle cx="12" cy="7" r="4"></circle>
+            </svg><span>Especialistas</span></button>
+          <button class="nav-item" data-tab="medicamentos" onclick="switchTab('medicamentos')"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+              <rect height="12" rx="2" width="18" x="3" y="9"></rect>
+              <path d="M8 9V6a4 4 0 0 1 8 0v3"></path>
+            </svg><span>Medicamentos</span></button>
+          <button class="nav-item" data-tab="agenda" onclick="switchTab('agenda')"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24">
+              <rect height="18" rx="2" width="18" x="3" y="4"></rect>
+              <line x1="16" x2="16" y1="2" y2="6"></line>
+              <line x1="8" x2="8" y1="2" y2="6"></line>
+              <line x1="3" x2="21" y1="10" y2="10"></line>
+            </svg><span>Agenda</span></button>
+        </div>
+      </div>
+      <!-- ============ SCHEDULE (Selecciona Día y Hora) ============ -->
+      <div class="screen" id="screen-schedule">
+        <div class="detail-topbar">
+          <button onclick="closeSchedule()">
+            <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <span>Selecciona Día y Hora</span>
+        </div>
+        <div class="content">
+          <span class="schedule-tag" id="sched-tag">Especialidad</span>
+          <div class="cal-header">
+            <button onclick="return false">‹</button>
+            <span class="cal-label">Sep 2026</span>
+            <button onclick="return false">›</button>
+          </div>
+          <div class="cal-grid" id="sched-cal"></div>
+          <div class="slots-label">Horario disponible</div>
+          <div class="slots-grid" id="sched-slots">
+            <button onclick="selectSlot(this)">8:00 A.M</button>
+            <button class="selected" onclick="selectSlot(this)">10:30 A.M</button>
+            <button onclick="selectSlot(this)">12:00 P.M</button>
+            <button onclick="selectSlot(this)">2:30 PM</button>
+            <button onclick="selectSlot(this)">5:00 PM</button>
+            <button onclick="selectSlot(this)">7:30 PM</button>
+            <button onclick="selectSlot(this)">9:00 PM</button>
+          </div>
+          <button class="btn-confirm-pink" onclick="confirmSchedule()">Confirmar</button>
+        </div>
+        <div class="toast-overlay" id="schedule-toast">
+          <div class="toast-card" id="schedule-toast-text">Su cita ha sido agendada exitosamente</div>
+        </div>
+      </div>
+      <!-- ============ CARRITO ============ -->
+      <div class="screen" id="screen-cart">
+        <div class="detail-topbar">
+          <button onclick="switchTab('medicamentos')">
+            <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <span>Carrito</span>
+        </div>
+        <div class="content">
+          <div id="cart-items"></div>
+          <div class="fulfill-switch">
+            <button class="active" id="fulfill-pickup" onclick="setFulfill('pickup')">Ir a recoger</button>
+            <button id="fulfill-delivery" onclick="setFulfill('delivery')">Pedir delivery</button>
+          </div>
+          <div class="cart-summary">
+            <div class="summary-row"><span id="sum-item-label">Subtotal</span><span id="sum-subtotal">$0.00</span></div>
+            <div class="summary-row" id="sum-delivery-row" style="display:none;"><span>Delivery</span><span>$1.50</span></div>
+            <div class="summary-row"><span>Descuento</span><span id="sum-discount">$0.00</span></div>
+            <div class="summary-row total"><span>Total</span><span id="sum-total">$0.00</span></div>
+          </div>
+          <button class="change-loc-link" id="view-pharmacy-link" onclick="showPharmacyMap()">Ver ubicación de la farmacia</button>
+          <button class="change-loc-link" id="change-loc-link" onclick="document.getElementById('loc-modal-overlay').classList.add('show')" style="display:none;">¿Desea cambiar su ubicación?</button>
+          <button class="btn-confirm-dark" id="btn-confirm-cart" onclick="openPaymentModal()">Confirmar</button>
+        </div>
+        <div class="modal-overlay" id="loc-modal-overlay">
+          <div class="loc-modal">
+            <div class="map-preview">📍</div>
+            <div class="loc-title">Asignar nueva ubicación</div>
+            <div class="loc-actions">
+              <button class="confirm" onclick="document.getElementById('loc-modal-overlay').classList.remove('show')">Confirmar</button>
+              <button class="cancel" onclick="document.getElementById('loc-modal-overlay').classList.remove('show')">Cancelar</button>
+            </div>
+          </div>
+        </div>
+        <div class="modal-overlay" id="pharmacy-map-overlay">
+          <div class="loc-modal">
+            <div class="map-preview">🗺️</div>
+            <div class="loc-title" id="pharmacy-map-text" style="text-align:left; padding:14px 16px;">
+              Dirección: Chorrera, Corregimiento de Puerto Caimito, Urbanización PH Boulevard Costa Verde La Chorrera, Panamá.<br /><br />¡Lo esperamos!
+            </div>
+            <div class="loc-actions">
+              <button class="confirm" onclick="document.getElementById('pharmacy-map-overlay').classList.remove('show')" style="border-right:none;">Cerrar</button>
+            </div>
+          </div>
+        </div>
+        <div class="modal-overlay" id="payment-modal-overlay">
+          <div class="loc-modal" id="payment-modal-card"></div>
+        </div>
+      </div>
+      <!-- ============ CUENTA ============ -->
+      <div class="screen" id="screen-cuenta">
+        <div class="detail-topbar">
+          <button onclick="switchTab(lastMainTab)">
+            <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <span>Mi Cuenta</span>
+        </div>
+        <div class="content">
+          <div class="profile-card">
+            <div class="profile-avatar">
+              <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20">
+                <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                <circle cx="12" cy="7" r="4"></circle>
+              </svg>
+            </div>
+            <div>
+              <div class="profile-name" id="acc-name">Usuario</div>
+              <div class="profile-age" id="acc-age">Edad no disponible</div>
+            </div>
+          </div>
+          <div class="account-field">
+            <div class="k">Identificación</div>
+            <div class="v" id="acc-id">—</div>
+          </div>
+          <div class="account-field">
+            <div class="k">Sexo</div>
+            <div class="v" id="acc-sexo">—</div>
+          </div>
+          <div class="account-field">
+            <div class="k">Correo electrónico</div>
+            <div class="v" id="acc-correo">—</div>
+          </div>
+          <div class="account-field">
+            <div class="k">Fecha de nacimiento</div>
+            <div class="v" id="acc-fecha">—</div>
+          </div>
+          <div class="account-field">
+            <div class="k">Número de teléfono</div>
+            <div class="v" id="acc-tel">—</div>
+          </div>
+        </div>
+      </div>
+      <!-- ============ ACCESIBILIDAD ============ -->
+      <div class="screen" id="screen-accesibilidad">
+        <div class="detail-topbar">
+          <button onclick="switchTab(lastMainTab)">
+            <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <span>Accesibilidad</span>
+        </div>
+        <div class="content">
+          <div class="settings-section-label">Tamaño de texto</div>
+          <div class="text-size-row">
+            <button onclick="setTextSize('small', this)">A-</button>
+            <button class="active" onclick="setTextSize('medium', this)">A</button>
+            <button onclick="setTextSize('large', this)">A+</button>
+          </div>
+          <div class="settings-section-label">Visualización</div>
+          <div class="settings-row">
+            <div>
+              <div class="label">Alto contraste</div>
+              <div class="sub">Aumenta el contraste de colores</div>
+            </div>
+            <button class="toggle" onclick="toggleContrast(this)"></button>
+          </div>
+          <div class="settings-row">
+            <div>
+              <div class="label">Modo oscuro</div>
+              <div class="sub">Reduce el brillo de la pantalla</div>
+            </div>
+            <button class="toggle" onclick="toggleDarkMode(this)"></button>
+          </div>
+          <div class="settings-section-label">Interacción</div>
+          <div class="settings-row">
+            <div>
+              <div class="label">Lector de pantalla</div>
+              <div class="sub">Describe en voz alta el contenido</div>
+            </div>
+            <button class="toggle" onclick="this.classList.toggle('on')"></button>
+          </div>
+          <div class="settings-row">
+            <div>
+              <div class="label">Reducir movimiento</div>
+              <div class="sub">Minimiza animaciones y transiciones</div>
+            </div>
+            <button class="toggle" onclick="this.classList.toggle('on')"></button>
+          </div>
+        </div>
+      </div>
+      <!-- ============ NOTIFICACIONES ============ -->
+      <div class="screen" id="screen-notificaciones">
+        <div class="detail-topbar">
+          <button onclick="switchTab(lastMainTab)">
+            <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <span>Notificaciones</span>
+        </div>
+        <div class="content">
+          <div class="settings-section-label">Recordatorios</div>
+          <div class="settings-row">
+            <div>
+              <div class="label">Recordatorios de medicamentos</div>
+              <div class="sub">Avisos a la hora indicada</div>
+            </div>
+            <button class="toggle on" onclick="this.classList.toggle('on')"></button>
+          </div>
+          <div class="settings-row">
+            <div>
+              <div class="label">Citas médicas</div>
+              <div class="sub">Avisos antes de cada cita</div>
+            </div>
+            <button class="toggle on" onclick="this.classList.toggle('on')"></button>
+          </div>
+          <div class="settings-section-label">General</div>
+          <div class="settings-row">
+            <div>
+              <div class="label">Notificaciones push</div>
+              <div class="sub">Alertas en tu dispositivo</div>
+            </div>
+            <button class="toggle on" onclick="this.classList.toggle('on')"></button>
+          </div>
+          <div class="settings-row">
+            <div>
+              <div class="label">Ofertas y noticias</div>
+              <div class="sub">Promociones y novedades de salud</div>
+            </div>
+            <button class="toggle" onclick="this.classList.toggle('on')"></button>
+          </div>
+          <div class="settings-row">
+            <div>
+              <div class="label">Resumen semanal por correo</div>
+              <div class="sub">Recibe un resumen todos los lunes</div>
+            </div>
+            <button class="toggle" onclick="this.classList.toggle('on')"></button>
+          </div>
+        </div>
+      </div>
+      <!-- ============ COMENTARIOS ============ -->
+      <div class="screen" id="screen-comentarios">
+        <div class="detail-topbar">
+          <button onclick="switchTab(lastMainTab)">
+            <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <span>Comentarios</span>
+        </div>
+        <div class="content">
+          <div class="detail-info-name" style="text-align:center; margin-bottom:2px;">¿Cómo ha sido tu experiencia?</div>
+          <div class="star-rate" id="feedback-stars">
+            <span onclick="rateFeedback(1)">★</span>
+            <span onclick="rateFeedback(2)">★</span>
+            <span onclick="rateFeedback(3)">★</span>
+            <span onclick="rateFeedback(4)">★</span>
+            <span onclick="rateFeedback(5)">★</span>
+          </div>
+          <textarea class="feedback-textarea" id="feedback-text" placeholder="Cuéntanos qué podemos mejorar..."></textarea>
+          <button class="btn-confirm-dark" onclick="submitFeedback()">Enviar comentario</button>
+        </div>
+        <div class="toast-overlay" id="feedback-toast">
+          <div class="toast-card">¡Gracias por tu comentario!</div>
+        </div>
+      </div>
+      <!-- ============ AYUDA ============ -->
+      <div class="screen" id="screen-ayuda">
+        <div class="detail-topbar">
+          <button onclick="switchTab(lastMainTab)">
+            <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20">
+              <polyline points="15 18 9 12 15 6"></polyline>
+            </svg>
+          </button>
+          <span>Ayuda</span>
+        </div>
+        <div class="content">
+          <button class="accordion-toggle" onclick="toggleAccordion(this,'help-1')">
+            ¿Cómo agendo una cita?
+            <svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" width="14">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="accordion-panel" id="help-1">Entra a Centros de salud o Especialistas, elige la opción deseada y toca "Agendar cita". Selecciona el día y la hora disponible y confirma.</div>
+          <button class="accordion-toggle" onclick="toggleAccordion(this,'help-2')">
+            ¿Cómo cancelo o reagendo una cita?
+            <svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" width="14">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="accordion-panel" id="help-2">Ve a Agenda, toca la cita que deseas modificar y elige "Reagendar cita" o "Cancelar cita".</div>
+          <button class="accordion-toggle" onclick="toggleAccordion(this,'help-3')">
+            ¿Cómo compro medicamentos?
+            <svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" width="14">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="accordion-panel" id="help-3">En Medicamentos busca el producto y toca "+ Agregar" — puedes usar los botones + / − para agregar cuantas unidades quieras de cada medicamento, incluso de farmacias distintas. Luego ve al carrito para elegir recoger o delivery y confirmar el pago.</div>
+          <button class="accordion-toggle" onclick="toggleAccordion(this,'help-4')">
+            ¿Cómo cancelo un pedido?
+            <svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" width="14">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="accordion-panel" id="help-4">Antes de pagar: abre el carrito desde Medicamentos y quita los productos que no quieras. Después de pagar un delivery: en la pantalla de Medicamentos verás el aviso "Pedido en camino"; tócalo y elige "Cancelar pedido".</div>
+          <button class="accordion-toggle" onclick="toggleAccordion(this,'help-5')">
+            Tengo una emergencia, ¿qué hago?
+            <svg fill="none" height="14" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" viewbox="0 0 24 24" width="14">
+              <polyline points="6 9 12 15 18 9"></polyline>
+            </svg>
+          </button>
+          <div class="accordion-panel" id="help-5">Desde la pantalla de inicio de sesión toca "Llamar a ambulancia" para marcar directamente.</div>
+          <div class="help-contact">
+            <b>¿Necesitas más ayuda?</b><br />
+            Soporte MediConnecta<br />
+            📞 800-MEDI (6334)<br />
+            ✉️ soporte@mediconnecta.com
+          </div>
+        </div>
+      </div>
+      <!-- ============ KEYPAD ============ -->
+      <div class="screen" id="screen-keypad">
+        <div class="topbar"><span class="app-title">MediConnecta</span></div>
+        <div class="content">
+          <div class="dial-label">Llamar a ambulancia</div>
+          <div class="dial-display" id="dial-display">911</div>
+          <div class="keypad-grid" id="keypad-grid"></div>
+          <div class="call-row">
+            <button class="back-key" onclick="dialBackspace()">
+              <svg fill="none" height="20" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewbox="0 0 24 24" width="20">
+                <path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"></path>
+                <line x1="18" x2="12" y1="9" y2="15"></line>
+                <line x1="12" x2="18" y1="9" y2="15"></line>
+              </svg>
+            </button>
+            <button class="call-btn" onclick="callAmbulance()">
+              <svg fill="#fff" height="24" stroke="none" viewbox="0 0 24 24" width="24">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.127.96.361 1.903.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.907.339 1.85.573 2.81.7A2 2 0 0 1 22 16.92z"></path>
+              </svg>
+            </button>
+            <div style="width:44px"></div>
+          </div>
+        </div>
+      </div>
+      <!-- ============ AMBULANCE EN CAMINO ============ -->
+      <div class="screen" id="screen-ambulance">
+        <div class="topbar"><span class="app-title">MediConnecta</span></div>
+        <div class="content">
+          <div class="map-area">
+            <div class="pulse-dot"></div>
+            <div class="ambulance-road"></div>
+            <div class="ambulance-icon">
+              <svg fill="none" height="26" viewbox="0 0 46 26" width="46">
+                <rect fill="#e33b3b" height="14" rx="2" width="26" x="2" y="6"></rect>
+                <rect fill="#c92e2e" height="10" rx="2" width="12" x="28" y="10"></rect>
+                <rect fill="#fff" height="6" width="8" x="12" y="10"></rect>
+                <rect fill="#e33b3b" height="10" width="3" x="14.5" y="8"></rect>
+                <rect fill="#e33b3b" height="3" width="12" x="10" y="11.5"></rect>
+                <circle cx="10" cy="21" fill="#222" r="3.4"></circle>
+                <circle cx="33" cy="21" fill="#222" r="3.4"></circle>
+                <rect fill="#136c8c" height="3" rx="1" width="6" x="4" y="3"></rect>
+              </svg>
+            </div>
+          </div>
+          <div class="amb-panel">
+            <div class="amb-title">Ambulancia en camino</div>
+            <div class="amb-sub">Un equipo médico ya fue notificado y se dirige a tu ubicación</div>
+            <div class="amb-eta" id="eta-timer">05:00</div>
+            <div class="amb-eta-label">tiempo estimado de llegada</div>
+            <button class="cancel-btn" onclick="cancelAmbulance()">Cancelar solicitud</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+
+</html>
